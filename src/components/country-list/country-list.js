@@ -8,39 +8,52 @@ export default class CountryList extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { config: 0 }
+        this.state = { config: countries[0].Name }
         this.changeConfig = this.changeConfig.bind(this);
     }
-    changeConfig() {
-        if (this.state.config < countries.length - 1) {
-            this.setState({
-                config: this.state.config + 1
-            })
-        }
-        else {
-            this.setState({
-                config: 0
-            })
-        }
+    // changeConfig() {
+    //     if (this.state.config < countries.length - 1) {
+    //         this.setState({
+    //             config: this.state.config + 1
+    //         })
+    //     }
+    //     else {
+    //         this.setState({
+    //             config: 0
+    //         })
+    //     }
 
+    // }
+
+    changeConfig(e) {
+        this.setState({
+            config: e.target.innerText.toLowerCase()
+        })
     }
-
 
 
 
 
 
     render() {
-
+        var currentCountry = countries.find(obj => {
+            return obj.Name === this.state.config
+        })
         return (
             <div>
                 <h1> Countries</h1>
 
-                <button onClick={this.changeConfig} className="btn btn-primary" > NEXT COUNTRY</button>
+                {/* <button onClick={this.changeConfig} className="btn btn-primary" > NEXT COUNTRY</button> */}
+                {countries.map((country) => {
+                    return <button onClick={this.changeConfig} className="btn btn-primary" > {country.Name}</button>
+                })}
 
 
-
-                <Country key={uiKeyGen()} data={countries[this.state.config]} config={this.state.config} name={countries[this.state.config].Name} flag={countries[this.state.config].flag} images={countries[this.state.config].images} />
+                <Country key={uiKeyGen()} data={currentCountry}
+                    config={currentCountry.Name}
+                    name={currentCountry.Name}
+                    flag={currentCountry.flag}
+                    images={currentCountry.images} />
 
             </div>
 
